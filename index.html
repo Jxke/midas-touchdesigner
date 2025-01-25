@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MiDaS Depth Estimation</title>
+    
+    <!-- TensorFlow.js Core -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.9.0/dist/tf.min.js"></script>
+    
+    <!-- TensorFlow.js WASM Backend -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.9.0/dist/tf-backend-wasm.js"></script>
+    
+    <!-- Initialize WASM Backend -->
+    <script>
+      // Configure TensorFlow.js WASM
+      tf.wasm.setWasmPaths(
+        'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.9.0/dist/'
+      );
+
+      // Wait for everything to be ready
+      async function initializeBackends() {
+        try {
+          // Initialize WASM backend
+          await tf.setBackend('wasm');
+          await tf.ready();
+          
+          console.log('WASM backend initialized successfully');
+          console.log('Current backend:', tf.getBackend());
+        } catch (error) {
+          console.error('Error initializing backends:', error);
+        }
+      }
+      
+      // Run initialization
+      initializeBackends();
+    </script>
+    
+    <link rel="stylesheet" href="src/style.css">
+  </head>
+  <body>
+    <div id="app">
+      <video id="webcam" style="display: none;"></video>
+      <canvas id="depth_map"></canvas>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

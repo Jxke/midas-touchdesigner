@@ -1,0 +1,36 @@
+/* General body styling */
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+}
+
+/* App container styling */
+#app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Webcam video styling */
+#webcam {
+  position: absolute;
+  width: 640px;
+  height: 480px;
+  object-fit: cover;
+}
+
+/* Depth map canvas styling */
+#depth_map {
+  width: 640px;
+  height: 480px;
+  background: #000;
+}
