@@ -18,9 +18,9 @@ This project provides a TouchDesigner implementation of the MiDaS depth estimati
 
 ## Requirements
 
-- TouchDesigner 2022.28160 or later
-- Python 3.7+
-- ONNX Runtime
+- TouchDesigner 2022.32660 or later
+- Python 3.9.5+
+- ONNX Runtime Library
 
 ## Installation
 

@@ -2,6 +2,14 @@
 import numpy as np
 import cv2
 
+# Global debug mode flag
+debugMode = False
+
+def setDebugMode(mode):
+    """Set the global debug mode"""
+    global debugMode
+    debugMode = mode
+
 def process_frame(scriptOp, img):
     """Process a single frame through MiDaS"""
     try:
@@ -12,7 +20,8 @@ def process_frame(scriptOp, img):
         output_name = parent_comp.fetch('midas_output_name')
         
         if model is None:
-            print("Error: Model not loaded")
+            if debugMode:
+                print("Error: Model not loaded")
             return img
             
         # Save original dimensions
@@ -24,8 +33,8 @@ def process_frame(scriptOp, img):
         if img.max() > 1.0:
             img = img / 255.0
             
-        # Resize to model input size (384x384)
-        img = cv2.resize(img, (384, 384))
+        # Resize to model input size (256x256)
+        img = cv2.resize(img, (256, 256))
         
         # Keep only RGB channels if RGBA
         if img.shape[2] == 4:
@@ -34,12 +43,14 @@ def process_frame(scriptOp, img):
         # Convert to CHW format and add batch dimension
         img = img.transpose(2, 0, 1)[None, ...]
         
-        print(f"Input shape before inference: {img.shape}")
+        if debugMode:
+            print(f"Input shape before inference: {img.shape}")
         
         # Run inference
         depth = model.run([output_name], {input_name: img})[0]
         
-        print(f"Output shape after inference: {depth.shape}")
+        if debugMode:
+            print(f"Output shape after inference: {depth.shape}")
         
         # Post-process depth map
         depth = depth.squeeze()
@@ -53,11 +64,14 @@ def process_frame(scriptOp, img):
         # Convert to RGB format for display
         depth = np.stack([depth] * 3, axis=-1)
         
-        print(f"Final output shape: {depth.shape}")
+        if debugMode:
+            print(f"Final output shape: {depth.shape}")
+            
         return depth.astype(np.float32)
         
     except Exception as e:
-        print(f"Error processing frame: {str(e)}")
+        if debugMode:
+            print(f"Error processing frame: {str(e)}")
         return img
 
 def cook(scriptOp):
@@ -65,7 +79,8 @@ def cook(scriptOp):
     try:
         # Get input image
         img = scriptOp.inputs[0].numpyArray()
-        print(f"Input image shape: {img.shape}")
+        if debugMode:
+            print(f"Input image shape: {img.shape}")
         
         # Process through MiDaS
         depth = process_frame(scriptOp, img)
