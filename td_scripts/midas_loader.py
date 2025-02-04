@@ -11,7 +11,7 @@ def onStart():
     """Initialize when script starts"""
     try:
         # Get the model path relative to the project
-        model_path = project.folder + '/dep/midas_models/midas-small.onnx'
+        model_path = project.folder + '/dep/midas_models/dpt_swin2_tiny_256.onnx'
         model_path = tdu.expandPath(model_path)
         
         print(f"Project folder: {project.folder}")
