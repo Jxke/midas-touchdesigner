@@ -32,8 +32,20 @@ This project provides a TouchDesigner implementation of the MiDaS depth estimati
    - Open `midas-touchdesigner.toe`
    - Click on the midas Base, go to the `Setup` parameter page, and pulse the `Install Dependencies`
    - Navigate to the `dep` folder
-      - Windows Users: double click `dep_install.cmd` for windows
-      - Mac Users: Open up Terminal on Mac, change directory (`cd`) into the `dep` folder, type in `chmod +x dep_install.sh` to make the script executable, then now you can drag in the  `dep_install.sh` and press `enter` to install the dependencies.
+      - Windows Users: double click `dep_install_windows.cmd`
+      - Mac Users: 
+        1. Open Terminal and change directory (`cd`) to the `dep` folder
+        2. For Intel Macs:
+           ```bash
+           chmod +x dep_install_mac_intel.sh
+           ./dep_install_mac_intel.sh
+           ```
+        3. For Apple Silicon Macs (M1/M2):
+           ```bash
+           chmod +x dep_install_mac_arm.sh
+           ./dep_install_mac_arm.sh
+           ```
+        Note: The scripts will automatically check if you're using the correct version for your Mac's architecture.
    - Back to TouchDesigner, go to the midas Base, moving to the `Runtime` parameter page and pulse `Run Paths` first then `Load MiDaS Model`
    - Now the model should be loaded and ready to use.
 
